@@ -6,7 +6,7 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { Clock, CheckCircle } from 'lucide-react';
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://cal-clone-backend.onrender.com/api';
 
 export default function BookingPage() {
   const { slug } = useParams();

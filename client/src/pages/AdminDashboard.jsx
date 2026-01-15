@@ -3,7 +3,7 @@ import axios from 'axios';
 import { format, parseISO } from 'date-fns';
 import { ExternalLink, Calendar, User, Clock } from 'lucide-react';
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://cal-clone-backend.onrender.com/api';
 
 export default function AdminDashboard() {
   const [bookings, setBookings] = useState([]);
