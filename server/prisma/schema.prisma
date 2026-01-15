@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  username     String         @unique
+  name         String?
+  eventTypes   EventType[]
+  bookings     Booking[]
+  availability Availability[]
+}
+
+model EventType {
+  id          Int       @id @default(autoincrement())
+  title       String
+  slug        String
+  description String?
+  duration    Int
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  bookings    Booking[]
+  @@unique([userId, slug])
+}
+
+model Availability {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  dayOfWeek Int      // 0=Sun, 1=Mon...
+  startTime String   // "09:00"
+  endTime   String   // "17:00"
+}
+
+model Booking {
+  id             Int           @id @default(autoincrement())
+  userId         Int
+  user           User          @relation(fields: [userId], references: [id])
+  eventTypeId    Int
+  eventType      EventType     @relation(fields: [eventTypeId], references: [id])
+  startTime      DateTime
+  endTime        DateTime
+  attendeeName   String
+  attendeeEmail  String
+  createdAt      DateTime      @default(now())
+}
